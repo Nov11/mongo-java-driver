@@ -257,8 +257,19 @@
 
 <h2 id="upgrading-from-3-9-x">Upgrading from 3.9.x</h2>
 
+<p>Please note that two large portions of the current driver have been deprecated as of the 3.9.0 release:</p>
+
+<ul>
+<li>The callback-based asynchronous driver has been deprecated in favor of the
+<a href="http://mongodb.github.io/mongo-java-driver-reactivestreams/">Reactive Streams Java Driver</a>.</li>
+<li>Much of the &ldquo;core&rdquo; driver on which the both the asynchronous and synchronous drivers are built has been deprecated.  In 3.0 we made most
+of this &ldquo;core&rdquo; driver a public API, but the benefit to users has turned out to be small and the maintenance costs of maintaining backwards
+compatibility has turned out to be high.  For that reason we&rsquo;ve decided to remove it from the public API (though it will still continue
+to exist as an implementation artifact).</li>
+</ul>
+
 <p>In the upcoming 4.0 release, all deprecated API elements except those documented as &ldquo;not currently scheduled for removal&rdquo; will be removed.
-Currently the only API elements <em>not</em> scheduled for removal are:</p>
+Currently the only deprecated API elements <em>not</em> scheduled for removal are:</p>
 
 <ul>
 <li><a href="/mongo-java-driver/3.10/javadoc?com/mongodb/Mongo.html#getDB-java.lang.String-

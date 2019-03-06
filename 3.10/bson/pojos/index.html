@@ -257,9 +257,9 @@
 
 <h2 id="pojos-plain-old-java-objects">POJOs - Plain Old Java Objects</h2>
 
-<p>The 3.5 release of the driver adds POJO support via the <a href="/mongo-java-driver/3.10/javadoc?org/bson/codecs/pojo/PojoCodec.html
-"><code>PojoCodec</code></a>, which allows for
-direct serialization of POJOs and Java Beans to and from BSON. Internally, each <code>PojoCodec</code> utilizes a
+<p>The 3.5 release of the driver adds POJO support via the <a href="/mongo-java-driver/3.10/javadoc?org/bson/codecs/pojo/PojoCodecProvider.html
+"><code>PojoCodecProvider</code></a>,
+which allows for direct serialization of POJOs and Java Beans to and from BSON. Internally, the <code>Codec</code> for each POJO utilizes a
 <a href="/mongo-java-driver/3.10/javadoc?org/bson/codecs/pojo/ClassModel.html
 "><code>ClassModel</code></a> instance to store metadata about how the POJO should be serialized.</p>
 
@@ -301,7 +301,7 @@ discriminator key and value.</li>
 "><code>ClassModel.builder(clazz)</code></a> method. The builder
  initially uses reflection to create the required metadata.</p>
 
-<p><code>PojoCodec</code> instances are created by the <a href="/mongo-java-driver/3.10/javadoc?org/bson/codecs/pojo/PojoCodecProvider.html
+<p>POJO <code>Codec</code> instances are created by the <a href="/mongo-java-driver/3.10/javadoc?org/bson/codecs/pojo/PojoCodecProvider.html
 "><code>PojoCodecProvider</code></a> which is a
 <code>CodecProvider</code>. CodecProviders are used by the <code>CodecRegistry</code> to find the correct <code>Codec</code> for any given class.</p>
 
@@ -320,8 +320,7 @@ encoded and decoded.</p>
 <h2 id="pojo-support">POJO support</h2>
 
 <p>Automatic POJO support can be provided by setting <code>PojoCodecProvider.Builder#automatic(true)</code>, once built the <code>PojoCodecProvider</code> will
-automatically create a <code>PojoCodec</code> for any class that contains at least one serializable or deserializable
-property.</p>
+automatically create a POJO <code>Codec</code> for any class that contains at least one serializable or deserializable property.</p>
 
 <p>The entry point for customisable POJO support is the <code>PojoCodecProvider</code>. New instances can be created via the
 <a href="/mongo-java-driver/3.10/javadoc?org/bson/codecs/pojo/PojoCodecProvider.html#builder
@@ -336,8 +335,8 @@ register any combination of:</p>
 </ul>
 
 <p>The <code>builder</code> also allows the user to register default <a href="#conventions">Conventions</a> for any POJOs that are automatically mapped, either
-the individual POJO classes or POJOs found from registered packages. The <code>PojoCodecProvider</code> will lookup PojoCodecs and return the first
-that matches the POJO class:</p>
+the individual POJO classes or POJOs found from registered packages. The <code>PojoCodecProvider</code> will lookup POJO <code>Codec</code> instances and return
+the first that matches the POJO class:</p>
 
 <ul>
 <li>Registered ClassModels</li>
@@ -364,7 +363,7 @@ CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), from
 <h5 class="admonition-title">tip</h5>
 <p>In general only one instance of a <code>PojoCodecProvider</code> should be created.</p>
 
-<p>This is because each <code>PojoCodecProvider</code> instance contains a look up table for discriminator names. If multiple PojoCodecProviders are
+<p>This is because each <code>PojoCodecProvider</code> instance contains a look up table for discriminator names. If multiple <code>PojoCodecProvider</code>s are
 used, care should be taken to ensure that each provider contains a holistic view of POJO classes, otherwise discriminator lookups can fail.
 Alternatively, using the full class name as the discriminator value will ensure successful POJO lookups.</p>
 
@@ -373,7 +372,7 @@ Alternatively, using the full class name as the discriminator value will ensure 
 
 <h2 id="default-configuration">Default configuration</h2>
 
-<p>By default the <code>PojoCodec</code> will not store <code>null</code> values or a discriminator when converting a POJO to BSON.</p>
+<p>By default the POJO <code>Codec</code> will not store <code>null</code> values or a discriminator when converting a POJO to BSON.</p>
 
 <p>Take the following <code>Person</code> class:</p>
 
@@ -465,8 +464,8 @@ public final class Tree extends GenericTree&lt;Integer, String&gt; {
 <p>The <code>Tree</code> POJO is serializable because it doesn&rsquo;t have any unknown type parameters. The <code>left</code>, <code>right</code> and <code>genericClass</code> properties are
 all serializable because they are bound to the concrete types <code>Integer</code>, <code>String</code> and <code>Long</code>.</p>
 
-<p>On their own, instances of <code>GenericTree</code> or <code>GenericClass</code> are not serializable by the <code>PojoCodec</code>. This is because the runtime type parameter
-information is erased by the JVM, and the type parameters cannot be specialized accurately.</p>
+<p>On their own, instances of <code>GenericTree</code> or <code>GenericClass</code> are not serializable by the POJO <code>Codec</code>. This is because the runtime type
+parameter information is erased by the JVM, and the type parameters cannot be specialized accurately.</p>
 
 <p>The 3.6 release of the driver further improves generic support with the addition of PropertyCodecProviders. The <code>PropertyCodecProvider</code> API
 allows type-safe support of container types by providing concrete type parameters for the generic types as declared in the POJO.</p>
@@ -540,8 +539,8 @@ membership id:</p>
 
 <h3 id="enum-support">Enum support</h3>
 
-<p>Enums are fully supported. The <code>PojoCodec</code> uses the name of the enum constant as the property value. This is then converted back into an Enum
-value by the codec using the static <code>Enum.valueOf</code> method.</p>
+<p>Enums are fully supported. The POJO <code>Codec</code> uses the name of the enum constant as the property value. This is then converted back into an
+Enum value by the codec using the static <code>Enum.valueOf</code> method.</p>
 
 <p>Take the following example:</p>
 
@@ -713,7 +712,7 @@ CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), from
 
 <h3 id="supporting-pojos-without-no-args-constructors">Supporting POJOs without no args constructors</h3>
 
-<p>By default PojoCodecs work with POJOs that have an empty, no arguments, constructor. POJOs with alternative constructors are supported
+<p>By default a POJO <code>Codec</code> works with POJOs that have an empty, no arguments, constructor. POJOs with alternative constructors are supported
 via the <code>ANNOTATION_CONVENTION</code> and the <code>@BsonCreator</code> annotation. Any parameters for the creator constructor should be annotated with the
 <code>@BsonProperty</code> annotation. Below is an example of a <code>Person</code> POJO that contains final fields that are set via the annotated constructor:</p>
 

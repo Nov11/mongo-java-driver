@@ -379,7 +379,7 @@ Connecting to Unix domain sockets is done via the <a href="/mongo-java-driver/3.
 
 <h3 id="pojocodec-improvements">PojoCodec improvements</h3>
 
-<p>The 3.7 release brings support for <code>Map&lt;String, Object&gt;</code> to the <code>PojoCodec</code>.</p>
+<p>The 3.7 release brings support for <code>Map&lt;String, Object&gt;</code> to the POJO <code>Codec</code>.</p>
 
 <h3 id="jsr-310-instant-localdate-localdatetime-support">JSR-310 Instant, LocalDate &amp; LocalDateTime support</h3>
 
@@ -471,9 +471,9 @@ BsonDocument embeddedDoc2 = (BsonDocument) embeddedArray.get(0);
 <a href="/mongo-java-driver/3.10/javadoc?com/mongodb/MongoClientOptions.html
 "><code>MongoClientOptions</code></a>.</p>
 
-<h3 id="pojocodec-improvements-1">PojoCodec improvements</h3>
+<h3 id="pojo-codec-improvements">POJO Codec improvements</h3>
 
-<p>The 3.6 release brings new improvements to the <code>PojoCodec</code>:</p>
+<p>The 3.6 release brings new improvements to the POJO <code>Codec</code>:</p>
 
 <ul>
 <li>Improved sub-class and discriminator support.</li>
@@ -764,7 +764,7 @@ collection.bulkWrite(Arrays.asList(
 <li><a href="#compression">Compression</a></li>
 <li><a href="#causal-consistency">Causal consistency</a></li>
 <li><a href="#application-configured-server-selection">Application-configured server selection</a></li>
-<li><a href="#pojocodec-improvements-1">PojoCodec improvements</a></li>
+<li><a href="#pojo-codec-improvements">POJO Codec improvements</a></li>
 </ul></li>
 <li><a href="#what-s-new-in-3-5">What&rsquo;s New in 3.5</a>
 <ul>

@@ -85,7 +85,7 @@ The following code snippets come from the PojoQuickTour.java example code that c
       <pubDate>Mon, 10 Apr 2017 14:27:51 -0400</pubDate>
       
       <guid>/mongo-java-driver/3.10/bson/pojos/</guid>
-      <description>POJOs - Plain Old Java Objects The 3.5 release of the driver adds POJO support via the PojoCodec, which allows for direct serialization of POJOs and Java Beans to and from BSON. Internally, each PojoCodec utilizes a ClassModel instance to store metadata about how the POJO should be serialized.
+      <description>POJOs - Plain Old Java Objects The 3.5 release of the driver adds POJO support via the PojoCodecProvider, which allows for direct serialization of POJOs and Java Beans to and from BSON. Internally, the Codec for each POJO utilizes a ClassModel instance to store metadata about how the POJO should be serialized.
 A ClassModel for a POJO includes:
  The class of the POJO. A new instance factory. Handling the creation of new instances of the POJO.</description>
     </item>
@@ -516,9 +516,8 @@ Field Updates This section describes update operators that apply to the value of
       <pubDate>Thu, 19 Mar 2015 12:53:39 -0400</pubDate>
       
       <guid>/mongo-java-driver/3.10/upgrading/</guid>
-      <description>Upgrading from 3.9.x In the upcoming 4.0 release, all deprecated API elements except those documented as &amp;ldquo;not currently scheduled for removal&amp;rdquo; will be removed. Currently the only API elements not scheduled for removal are:
- Mongo.getDB JsonMode.STRICT  To prepare for the 4.0 release, please compile with deprecation warnings enabled and replace all usage of deprecated API elements with their recommended replacements.
-Also, note that the 3.11 release (which will include support for MongoDB 4.</description>
+      <description>Upgrading from 3.9.x Please note that two large portions of the current driver have been deprecated as of the 3.9.0 release:
+ The callback-based asynchronous driver has been deprecated in favor of the Reactive Streams Java Driver. Much of the &amp;ldquo;core&amp;rdquo; driver on which the both the asynchronous and synchronous drivers are built has been deprecated. In 3.0 we made most of this &amp;ldquo;core&amp;rdquo; driver a public API, but the benefit to users has turned out to be small and the maintenance costs of maintaining backwards compatibility has turned out to be high.</description>
     </item>
     
     <item>
@@ -783,8 +782,7 @@ import com.mongodb.ConnectionString; import com.</description>
 What&amp;rsquo;s New in 3.10 For key new features of 3.10, see What&amp;rsquo;s New.
 Upgrade To upgrade, refer to the Upgrade Considerations documentation.
 MongoDB Driver For the synchronous MongoDB Driver, see MongoDB Driver section.
-MongoDB Async Driver For the new asynchronous MongoDB Async Driver, the MongoDB Async Driver section.
-BSON Library The BSON library comprehensively supports the BSON spec, the data storage and network transfer format that MongoDB uses for “documents&amp;rdquo;.</description>
+MongoDB Async Driver For the callback-based asynchronous MongoDB Async Driver, see MongoDB Async Driver section. Note that this driver has been deprecated in favor of the Reactive Streams Java Driver.</description>
     </item>
     
   </channel>
